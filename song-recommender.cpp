@@ -1,7 +1,7 @@
-/*  Song Recommender
+/*  song-recommender.cpp
  *  Author: Sanket Patel
+ *  Date: 03/30/2023
  */
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -9,16 +9,20 @@
 #include <set>
 #include <vector>
 #include <map>
+#include "song-recommender.hpp"
 
-using namespace std;
+bool valueComparatorDescending(std::pair<std::string, int> &key_val_a,
+                               std::pair<std::string, int> &key_val_b);
 
-// Function to return a set of songs from a string separated by a delimiter
-set<string> createPreferenceSet(const string &line, const char delim)
+std::vector<std::string> sortKeysByValue(std::map<std::string, int> &countMap, bool (*comparator)(std::pair<std::string, int> &, std::pair<std::string, int> &));
+
+// Function to return a std::set of songs from a std::string separated by a delimiter
+std::set<std::string> createPreferenceSet(const std::string &line, const char delim)
 {
-    set<string> preferenceSet;
+    std::set<std::string> preferenceSet;
 
-    stringstream ss(line);
-    string song;
+    std::stringstream ss(line);
+    std::string song;
     while (getline(ss, song, delim))
     {
         preferenceSet.insert(song);
@@ -26,19 +30,19 @@ set<string> createPreferenceSet(const string &line, const char delim)
     return preferenceSet;
 }
 
-bool valueComparatorDescending(pair<string, int> &key_val_a,
-                               pair<string, int> &key_val_b)
+bool valueComparatorDescending(std::pair<std::string, int> &key_val_a,
+                               std::pair<std::string, int> &key_val_b)
 {
     return key_val_b.second < key_val_a.second;
 }
 
-// Function to sort the keys in a map based on their values, returns a vector of keys.
-vector<string> sortKeysByValue(map<string, int> &countMap, bool (*comparator)(pair<string, int> &, pair<string, int> &))
+// Function to sort the keys in a std::map based on their values, returns a std::vector of keys.
+std::vector<std::string> sortKeysByValue(std::map<std::string, int> &countMap, bool (*comparator)(std::pair<std::string, int> &, std::pair<std::string, int> &))
 {
-    // Declare vector of pairs
-    vector<pair<string, int>> entries;
+    // Declare std::vector of pairs
+    std::vector<std::pair<std::string, int>> entries;
 
-    // Copy key-value pair from Map to vector of pairs
+    // Copy key-value std::pair from std::map to std::vector of pairs
     for (auto &entry : countMap)
     {
         entries.push_back(entry);
@@ -47,7 +51,7 @@ vector<string> sortKeysByValue(map<string, int> &countMap, bool (*comparator)(pa
     // Sort using comparator function
     sort(entries.begin(), entries.end(), comparator);
 
-    vector<string> result;
+    std::vector<std::string> result;
 
     // Print the sorted value
     for (auto &entry : entries)
@@ -57,16 +61,16 @@ vector<string> sortKeysByValue(map<string, int> &countMap, bool (*comparator)(pa
     return result;
 }
 
-vector<string> recommendSongs(const vector<set<string>> &knownPreferences, const set<string> &givenPreference)
+std::vector<std::string> recommendSongs(const std::vector<std::set<std::string>> &knownPreferences, const std::set<std::string> &givenPreference)
 {
-    map<string, int> songCount;
+    std::map<std::string, int> songCount;
     for (auto const &preference : knownPreferences)
     {
         if (includes(preference.begin(), preference.end(),
                      givenPreference.begin(), givenPreference.end()))
         {
 
-            vector<string> recommendedSongs;
+            std::vector<std::string> recommendedSongs;
             set_difference(preference.begin(), preference.end(), givenPreference.begin(), givenPreference.end(), back_inserter(recommendedSongs));
 
             for (auto const &song : recommendedSongs)
@@ -75,16 +79,16 @@ vector<string> recommendSongs(const vector<set<string>> &knownPreferences, const
             }
         }
     }
-    vector<string> result = sortKeysByValue(songCount, valueComparatorDescending);
+    std::vector<std::string> result = sortKeysByValue(songCount, valueComparatorDescending);
 
     return result;
 }
 
-tuple<vector<set<string>>, set<string>> getPreferences(fstream &inputFile)
+std::tuple<std::vector<std::set<std::string>>, std::set<std::string>> getPreferences(std::fstream &inputFile)
 {
-    vector<set<string>> knownPreferences;
+    std::vector<std::set<std::string>> knownPreferences;
 
-    string temp;
+    std::string temp;
     getline(inputFile, temp);
     int N = stoi(temp);
 
@@ -95,46 +99,7 @@ tuple<vector<set<string>>, set<string>> getPreferences(fstream &inputFile)
     }
 
     getline(inputFile, temp);
-    set<string> givenPreference = createPreferenceSet(temp, ' ');
+    std::set<std::string> givenPreference = createPreferenceSet(temp, ' ');
 
-    return tuple(knownPreferences, givenPreference);
-}
-
-int main()
-{
-    int T;
-    vector<vector<string>> results;
-    const string inputFilePath = "resources/input.txt";
-    const string outputNaiveFilePath = "resources/output-cpp-naive.txt";
-
-    fstream inputFile;
-
-    inputFile.open(inputFilePath, ios::in);
-    if (inputFile.is_open())
-    {
-        string t;
-        getline(inputFile, t);
-        T = stoi(t);
-        for (int i = 0; i < T; i++)
-        {
-            vector<set<string>> knownPreferences;
-            set<string> givenPreference;
-            tie(knownPreferences, givenPreference) = getPreferences(inputFile);
-            results.push_back(recommendSongs(knownPreferences, givenPreference));
-        }
-        inputFile.close();
-    }
-
-    fstream outputNaiveFile;
-    outputNaiveFile.open(outputNaiveFilePath, ios::out);
-    if (outputNaiveFile.is_open()) {
-        for (auto const& result: results) {
-            for (auto const& song: result) {
-                outputNaiveFile << song << ' ';
-            }
-            outputNaiveFile << endl;
-        }
-    }
-
-    return 0;
+    return std::tuple(knownPreferences, givenPreference);
 }
