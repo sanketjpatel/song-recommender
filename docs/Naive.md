@@ -10,4 +10,4 @@ Sort the songs in the results vector based on their counts in the map.
 
 ## Limitations
 
-If the given preference set of the new user is large, it is likely that none of the existing preferences are a superset. Thereby, rendering no recommendations.
+If the given preference set of the new user is large, it is likely that none of the existing preferences are a superset. Thereby, rendering no recommendations. This can be avoided using a [rank based approach](RankBased.md)

@@ -63,7 +63,7 @@ Hence, we first recommend `D`, and then recommend `A`.
 
 The naive approach that meets the expected output is detailed in [Naive.md](docs/Naive.md).
 
-You can have a more realistic recommender algorithm that combines the correlation score of a preference set and assigns rank to the recommended songs based on them.
+You can have [a more realistic recommender](docs/RankBased.md) algorithm that combines the correlation score of a preference set and assigns rank to the recommended songs based on these correlations.
 
 # Contributing
 
