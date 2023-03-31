@@ -4,14 +4,15 @@
 #include <vector>
 
 template <typename K, typename V>
-bool valueComparatorDescending(const std::pair<K, V> &key_val_a,
-                               const std::pair<K, V> &key_val_b)
+const bool valueComparatorDescending(const std::pair<K, V> &key_val_a,
+                                     const std::pair<K, V> &key_val_b)
 {
-    return key_val_b.second < key_val_a.second;
+    return key_val_a.second > key_val_b.second;
 }
 
 template <typename K, typename V>
-std::vector<K> sortKeys(std::map<K, V> &keyValueMap, bool (*comparator)(const std::pair<K, V> &, const std::pair<K, V> &)) {
+std::vector<K> sortKeys(std::map<K, V> &keyValueMap, const bool (*comparator)(const std::pair<K, V> &, const std::pair<K, V> &))
+{
     std::vector<std::pair<K, V>> entries;
     for (auto &entry : keyValueMap)
     {

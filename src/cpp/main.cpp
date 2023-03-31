@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void writeResults(const string &filepath, vector<vector<string>>& results)
+void writeResults(const string &filepath, const vector<vector<string>> &results)
 {
     fstream outputFile;
     outputFile.open(filepath, ios::out);

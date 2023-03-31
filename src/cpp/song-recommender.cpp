@@ -119,7 +119,7 @@ std::tuple<std::vector<std::set<std::string>>, std::set<std::string>> getPrefere
     return std::tuple(knownPreferences, givenPreference);
 }
 
-void writeRecommendations(std::fstream &outputFile, std::vector<std::string> &recommendations)
+void writeRecommendations(std::fstream &outputFile, const std::vector<std::string> &recommendations)
 {
     for (auto const &song : recommendations)
     {
