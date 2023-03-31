@@ -58,3 +58,15 @@ Explanation:
 So we can recommend songs `A` and `D` to the new user. The order in which we recommend the songs is important. Song `D` belongs to both of `User1` and `User2`'s preferences, however song `A` only belongs to `User1`'s preference list.
 
 Hence, we first recommend `D`, and then recommend `A`.
+
+# Solution
+
+The naive approach that meets the expected output is detailed in [Naive.md](docs/Naive.md).
+
+You can have a more realistic recommender algorithm that combines the correlation score of a preference set and assigns rank to the recommended songs based on them.
+
+# Contributing
+
+Please submit issues/pull requests and we can collaborate :smile:
+
+Cheers!
