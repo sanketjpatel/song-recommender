@@ -67,7 +67,7 @@ You can have [a more realistic recommender](docs/RankBased.md) algorithm that co
 
 # Contributing
 
-You may refer to [launch configurations](docs/Launch.md) used for this project. Please submit issues/pull requests and we can collaborate :smile:
+You may refer to [launch configurations](docs/Launch.md) used for this project. Please submit issues/pull requests and we can collaborate :slightly_smiling_face:
 
 Sample inputs can be found in `resources/`
 

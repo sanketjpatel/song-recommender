@@ -131,4 +131,4 @@ This score could be based on attributes like genre, number of times played, etc.
 
 The correlationFactor will now be calculated from maps with song scores, instead of the sets.
 
-People are diverse. Why not make our recommendation engine more inclusive? :smile:
+People are diverse. Why not make our recommendation engine more inclusive? :slightly_smiling_face:

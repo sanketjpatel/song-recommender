@@ -2,24 +2,10 @@
  *  Author: Sanket Patel
  *  Date: 03/30/2023
  */
-#include <fstream>
 #include <sstream>
 #include <string>
-#include <tuple>
-#include <set>
-#include <vector>
-#include <map>
 #include "song-recommender.hpp"
-
-// TODO: Convert this to generic templates / use lambdas / std::less
-bool valueComparatorDescending(std::pair<std::string, int> &key_val_a,
-                               std::pair<std::string, int> &key_val_b);
-
-bool valueComparatorDescending(std::pair<std::string, float> &key_val_a,
-                               std::pair<std::string, float> &key_val_b);
-
-std::vector<std::string> sortKeysByValue(std::map<std::string, int> &countMap, bool (*comparator)(std::pair<std::string, int> &, std::pair<std::string, int> &));
-std::vector<std::string> sortKeysByValue(std::map<std::string, float> &countMap, bool (*comparator)(std::pair<std::string, float> &, std::pair<std::string, float> &));
+#include "map-util.hpp"
 
 // Function to return a set of songs from a string separated by a delimiter
 // Input String = "MySong 1,MySong 2,Some song 3"
@@ -64,64 +50,6 @@ float calculateCorrelationFactorMatching(const std::set<std::string> &existingPr
     return (float)matchingSongCount / (float)newUserPreference.size();
 }
 
-bool valueComparatorDescending(std::pair<std::string, int> &key_val_a,
-                               std::pair<std::string, int> &key_val_b)
-{
-    return key_val_b.second < key_val_a.second;
-}
-
-bool valueComparatorDescending(std::pair<std::string, float> &key_val_a,
-                               std::pair<std::string, float> &key_val_b)
-{
-    return key_val_b.second < key_val_a.second;
-}
-
-// Function to sort the keys in a map based on their values, returns a vector of the keys
-std::vector<std::string> sortKeysByValue(std::map<std::string, int> &countMap, bool (*comparator)(std::pair<std::string, int> &, std::pair<std::string, int> &))
-{
-    // Declare a vector of pairs
-    std::vector<std::pair<std::string, int>> entries;
-
-    // Copy key,value pair from the map to the vector of pairs
-    for (auto &entry : countMap)
-    {
-        entries.push_back(entry);
-    }
-
-    // Sort using the comparator function
-    sort(entries.begin(), entries.end(), comparator);
-
-    std::vector<std::string> result;
-
-    // Add keys of the sorted entries to the result
-    for (auto &entry : entries)
-    {
-        result.push_back(entry.first);
-    }
-    return result;
-}
-
-// Function to sort the keys in a map based on their values, returns a vector of keys. Similar to above, but with float values
-std::vector<std::string> sortKeysByValue(std::map<std::string, float> &countMap, bool (*comparator)(std::pair<std::string, float> &, std::pair<std::string, float> &))
-{
-    std::vector<std::pair<std::string, float>> entries;
-
-    for (auto &entry : countMap)
-    {
-        entries.push_back(entry);
-    }
-
-    sort(entries.begin(), entries.end(), comparator);
-
-    std::vector<std::string> result;
-
-    for (auto &entry : entries)
-    {
-        result.push_back(entry.first);
-    }
-    return result;
-}
-
 std::vector<std::string> recommendSongsNaive(const std::vector<std::set<std::string>> &knownPreferences, const std::set<std::string> &givenPreference)
 {
     // Create a map of recommended songs, with their count of occurrences in matched existing preferences
@@ -144,7 +72,7 @@ std::vector<std::string> recommendSongsNaive(const std::vector<std::set<std::str
         }
     }
     // Sort the recommended songs based on their count of occurrences.
-    return sortKeysByValue(songCount, valueComparatorDescending);
+    return sortKeys(songCount, valueComparatorDescending);
 }
 
 std::vector<std::string> recommendSongsRankBased(const std::vector<std::set<std::string>> &knownPreferences, const std::set<std::string> &givenPreference)
@@ -168,7 +96,7 @@ std::vector<std::string> recommendSongsRankBased(const std::vector<std::set<std:
         }
     }
     // Sort recommended songs based on their scores.
-    return sortKeysByValue(songScores, valueComparatorDescending);
+    return sortKeys(songScores, valueComparatorDescending);
 }
 
 std::tuple<std::vector<std::set<std::string>>, std::set<std::string>> getPreferences(std::fstream &inputFile)
