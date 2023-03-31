@@ -6,19 +6,19 @@ Recommend songs to this new user.
 
 ## Input
 
-First line represents T, the number of test cases.
+First line represents `T`, the number of test cases.
 
-Each test case consists for N + 2 lines.
+Each test case consists for `N+2` lines.
 
-First line of a test case represents N, the existing number of users.
+First line of a test case represents `N`, the existing number of users.
 
-Next N lines represent the list of song preferences of each of those existing users.
+Next `N` lines represent the list of song preferences of each of those existing users.
 
 Last line of a test case represents the song preferences of the new user.
 
 ## Expected Output
 
-T lines.
+`T` lines.
 
 Each line represents the list of recommended songs to be given to the new user for a test case.
 
