@@ -10,14 +10,29 @@
 
 using namespace std;
 
+void writeResults(const string &filepath, vector<vector<string>>& results)
+{
+    fstream outputFile;
+    outputFile.open(filepath, ios::out);
+    if (outputFile.is_open())
+    {
+        for (auto &recommendations : results)
+        {
+            writeRecommendations(outputFile, recommendations);
+        }
+        outputFile.close();
+    }
+}
+
 int main()
 {
     int T;
     vector<vector<string>> resultsNaive;
     vector<vector<string>> resultsRankBased;
     const string inputFilePath = "resources/input.txt";
-    const string outputNaiveFilePath = "resources/output-cpp-naive.txt";
-    const string outputRankBasedFilePath = "resources/output-cpp-rank-based.txt";
+
+    const string outputNaiveFilePath = "outputs/output-cpp-naive.txt";
+    const string outputRankBasedFilePath = "outputs/output-cpp-rank-based.txt";
 
     fstream inputFile;
     inputFile.open(inputFilePath, ios::in);
@@ -38,35 +53,8 @@ int main()
         inputFile.close();
     }
 
-    fstream outputNaiveFile;
-    outputNaiveFile.open(outputNaiveFilePath, ios::out);
-    if (outputNaiveFile.is_open())
-    {
-        for (auto const &result : resultsNaive)
-        {
-            for (auto const &song : result)
-            {
-                outputNaiveFile << song << ' ';
-            }
-            outputNaiveFile << endl;
-        }
-        outputNaiveFile.close();
-    }
-
-    fstream outputRankBasedFile;
-    outputRankBasedFile.open(outputRankBasedFilePath, ios::out);
-    if (outputRankBasedFile.is_open())
-    {
-        for (auto const &result : resultsRankBased)
-        {
-            for (auto const &song : result)
-            {
-                outputRankBasedFile << song << ' ';
-            }
-            outputRankBasedFile << endl;
-        }
-        outputRankBasedFile.close();
-    }
+    writeResults(outputNaiveFilePath, resultsNaive);
+    writeResults(outputRankBasedFilePath, resultsRankBased);
 
     return 0;
 }

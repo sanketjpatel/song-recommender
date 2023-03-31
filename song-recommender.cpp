@@ -54,12 +54,14 @@ float calculateCorrelationFactor(const std::set<std::string> &existingPreference
 float calculateCorrelationFactorMatching(const std::set<std::string> &existingPreference, const std::set<std::string> &newUserPreference)
 {
     int matchingSongCount = 0;
-    for(auto const& song: existingPreference) {
-        if (newUserPreference.find(song) != newUserPreference.end()) {
+    for (auto const &song : existingPreference)
+    {
+        if (newUserPreference.find(song) != newUserPreference.end())
+        {
             matchingSongCount++;
         }
     }
-    return (float)matchingSongCount/(float)newUserPreference.size();
+    return (float)matchingSongCount / (float)newUserPreference.size();
 }
 
 bool valueComparatorDescending(std::pair<std::string, int> &key_val_a,
@@ -159,7 +161,7 @@ std::vector<std::string> recommendSongsRankBased(const std::vector<std::set<std:
                 // A song in the existing preference is not found in the set of new user's preferences.
                 if (givenPreference.find(song) == givenPreference.end())
                 {
-                    //Add the correlation factor to the song's score.
+                    // Add the correlation factor to the song's score.
                     songScores[song] += correlationFactor;
                 }
             }
@@ -187,4 +189,13 @@ std::tuple<std::vector<std::set<std::string>>, std::set<std::string>> getPrefere
     std::set<std::string> givenPreference = createPreferenceSet(temp, ' ');
 
     return std::tuple(knownPreferences, givenPreference);
+}
+
+void writeRecommendations(std::fstream &outputFile, std::vector<std::string> &recommendations)
+{
+    for (auto const &song : recommendations)
+    {
+        outputFile << song << ' ';
+    }
+    outputFile << std::endl;
 }
