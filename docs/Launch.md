@@ -16,10 +16,10 @@ Here are the various configurations that were used:
             "name": "C/C++: g++ build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/bin/${fileBasenameNoExtension}",
+            "program": "${workspaceFolder}/bin/main-cpp",
             "args": ["-std=c++17"],
             "stopAtEntry": false,
-            "cwd": "${fileDirname}",
+            "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
             "MIMode": "lldb",
@@ -60,12 +60,12 @@ Here are the various configurations that were used:
                 "-std=c++17",
                 "-fdiagnostics-color=always",
                 "-g",
-                "${fileDirname}/**.cpp",
+                "${workspaceFolder}/src/cpp/**.cpp",
                 "-o",
-                "${fileDirname}/bin/${fileBasenameNoExtension}"
+                "${workspaceFolder}/bin/main-cpp"
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
@@ -84,12 +84,12 @@ Here are the various configurations that were used:
                 "-std=c++17",
                 "-fdiagnostics-color=always",
                 "-g",
-                "${fileDirname}/**.cpp",
+                "${workspaceFolder}/src/cpp/**.cpp",
                 "-o",
-                "${fileDirname}/bin/${fileBasenameNoExtension}"
+                "${workspaceFolder}/bin/main-cpp"
             ],
             "options": {
-                "cwd": "${fileDirname}"
+                "cwd": "${workspaceFolder}"
             },
             "problemMatcher": [
                 "$gcc"
