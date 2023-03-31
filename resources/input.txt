@@ -1,0 +1,13 @@
+2
+3
+A B C D
+B C D
+C D E
+B C
+5
+Y Q U X C P I G
+A B C D E F G H I J K Q
+E W Z Y T U
+Q Z E B C G
+B K G R Q C E
+C E G Q
