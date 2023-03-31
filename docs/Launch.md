@@ -16,7 +16,7 @@ Here are the various configurations that were used:
             "name": "C/C++: g++ build and debug active file",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "program": "${fileDirname}/bin/${fileBasenameNoExtension}",
             "args": ["-std=c++17"],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
@@ -60,9 +60,9 @@ Here are the various configurations that were used:
                 "-std=c++17",
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "${fileDirname}/**.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/bin/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -84,9 +84,9 @@ Here are the various configurations that were used:
                 "-std=c++17",
                 "-fdiagnostics-color=always",
                 "-g",
-                "${file}",
+                "${fileDirname}/**.cpp",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/bin/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${fileDirname}"
@@ -100,9 +100,10 @@ Here are the various configurations that were used:
     ],
     "version": "2.0.0"
 }
-```
+  ```
 </details>
 
+Compiler
 ```
 spatel@Sankets-MacBook-Pro song-recommender % g++ --version
 Apple clang version 14.0.0 (clang-1400.0.29.202)
