@@ -2,11 +2,65 @@
 
 Treat each user's preference list as a set.
 
-Compare an existing preference set with the new user's preference set to calculate its correlation score.
+Compare an existing preference set with the new user's preference set to calculate its correlation score. If the existing set is a superset of new user's preferences, the correlation score is `1`. Otherwise, it is `0`.
+
+<details>
+  <summary>Calculating Correlation for expected output</summary>
+  
+
+  ### song-recommender.cpp
+  ```cpp
+// ...
+
+float calculateCorrelationFactor(const std::set<std::string> &existingPreference, const std::set<std::string> &newUserPreference)
+{
+    if (includes(existingPreference.begin(), existingPreference.end(),
+                 newUserPreference.begin(), newUserPreference.end()))
+    {
+        return 1.0;
+    }
+    return 0;
+}
+
+// ...
+```
+</details>
+<br>
 
 Create a map of the recommended songs, with their scores based on the correlation scores of each preference set.
+<details>
+  <summary>Calculating scores for recommended songs</summary>
+  
+
+  ### song-recommender.cpp
+  ```cpp
+// ...
+// Create a map of recommended songs, with their scores
+    std::map<std::string, float> songScores;
+    for (auto const &preference : knownPreferences)
+    {
+        float correlationFactor = calculateCorrelationFactor(preference, givenPreference);
+        if (correlationFactor > 0)
+        {
+            for (const auto &song : preference)
+            {
+                // A song in the existing preference is not found in the set of new user's preferences.
+                if (givenPreference.find(song) == givenPreference.end())
+                {
+                    // Add the correlation factor to the song's score.
+                    songScores[song] += correlationFactor;
+                }
+            }
+        }
+    }
+// ...
+   ```
+</details>
+<br>
 
 Return a vector of songs, sorted by their scores in the above map.
+
+<br>
 
 ## Avoiding the limitation in Naive Approach
 
@@ -68,6 +122,7 @@ float calculateCorrelationFactor(const std::set<std::string> &existingPreference
 // ...
 ```
 </details>
+<br>
 
 # Future Work
 
